@@ -1,0 +1,1637 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <title>RIA — Onboarding (Full Dashboard — Debugged)</title>
+
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Merriweather:wght@700&display=swap" rel="stylesheet">
+
+  <style>
+
+    :root{
+
+      --bg-start:#fbf7fb;
+
+      --bg-end:#f7f2fb;
+
+      --muted:#667085;
+
+      --text:#0b1720;
+
+      --accent1:#6a4df5;
+
+      --accent2:#e26cea;
+
+      --card:#ffffff;
+
+      --tile-border:#eef4f8;
+
+      --radius:14px;
+
+      --shadow-lg: 0 28px 60px rgba(11,18,40,0.06);
+
+      --shadow-sm: 0 12px 30px rgba(11,18,40,0.06);
+
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+
+    }
+
+
+
+    *{box-sizing:border-box}
+
+    body{margin:0;background:linear-gradient(180deg,var(--bg-start),var(--bg-end));-webkit-font-smoothing:antialiased;color:var(--text);padding:28px 18px 120px}
+
+    .page{max-width:1150px;margin:0 auto;background:linear-gradient(180deg,rgba(255,255,255,0.98),rgba(255,255,255,0.95));border-radius:20px;padding:26px;box-shadow:var(--shadow-lg);border:1px solid rgba(11,18,40,0.02)}
+
+    .hero{text-align:center}
+
+    .brand{font-family:Merriweather,serif;font-size:48px;color:var(--accent1);font-weight:800;margin:0}
+
+    .lead{color:var(--muted);font-size:16px;line-height:1.6;margin:8px 0 14px}
+
+    .cta-row{display:flex;gap:12px;justify-content:center}
+
+    .btn{border:0;padding:8px 14px;border-radius:12px;font-weight:700;cursor:pointer;font-size:14px}
+
+    .btn-primary{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#fff}
+
+    .btn-ghost{background:#fff;border:1px solid rgba(11,18,40,0.06);color:var(--text)}
+
+
+
+    .features{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:16px}
+
+    .feature{background:var(--card);padding:14px;border-radius:12px;border:1px solid rgba(11,18,40,0.03);box-shadow:var(--shadow-sm);display:flex;gap:12px;align-items:flex-start;min-height:92px}
+
+    .icon-pill{width:42px;height:42;border-radius:10px;background:linear-gradient(180deg,var(--accent1),var(--accent2));display:grid;place-items:center;color:#fff;font-size:18px;flex-shrink:0}
+
+    .feature-title{font-weight:800;margin:0;font-size:18px}
+
+    .feature-desc{color:var(--muted);margin-top:6px;font-size:14px;line-height:1.4}
+
+
+
+    .layout{display:grid;grid-template-columns:1fr 420px;gap:18px;margin-top:18px;align-items:start}
+
+    .panel{background:var(--card);padding:14px;border-radius:12px;border:1px solid rgba(11,22,35,0.04);box-shadow:var(--shadow-sm)}
+
+
+
+    /* Quick Access */
+
+    .quick-access-card{border-radius:12px;padding:14px;background:var(--card);box-shadow:0 14px 36px rgba(11,18,40,0.04);border:1px solid rgba(11,18,40,0.04)}
+
+    .qa-title{font-weight:800;font-size:20px;margin:0}
+
+    .qa-sub{color:var(--muted);margin-top:6px;font-size:13px}
+
+    .qa-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
+
+    .qa-tile{background:#fff;border-radius:12px;padding:14px;border:1px solid var(--tile-border);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:76px;cursor:pointer;transition:transform .12s,box-shadow .12s}
+
+    .qa-tile:hover{transform:translateY(-6px);box-shadow:0 24px 60px rgba(11,18,40,0.06)}
+
+    .qa-icon{width:36px;height:36;border-radius:9px;background:transparent;display:grid;place-items:center;color:var(--accent1);font-size:18px}
+
+    .qa-label{font-weight:700;font-size:15px;margin-top:4px}
+
+    .qa-tile:focus{outline:4px solid rgba(106,77,245,0.12);outline-offset:2px}
+
+
+
+    /* My Dashboard */
+
+    .my-dashboard { margin-top:14px; border-radius:12px; padding:12px; background:linear-gradient(180deg,#fff,#fbfdff); box-shadow:var(--shadow-sm); border:1px solid rgba(11,18,40,0.03) }
+
+    .stat-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-top:12px; }
+
+    .stat { background:#fff; border-radius:10px; padding:10px; border:1px solid #eef6f8; display:flex; flex-direction:column; gap:6px; align-items:flex-start; }
+
+    .stat .num { font-weight:800; font-size:20px; color:var(--accent1); }
+
+    .stat .label { color:var(--muted); font-size:13px; }
+
+
+
+    /* Today's tasks */
+
+    .today-grid{display:flex;gap:16px;align-items:flex-start;margin-top:12px}
+
+    .task-row{display:flex;align-items:center;justify-content:space-between;padding:12px;border-radius:10px;border:1px solid #eef6f8;background:#fff;margin-top:10px}
+
+    .task-info{display:flex;gap:12px;align-items:center}
+
+    .task-meta{color:var(--muted);font-size:13px}
+
+    .task-checkbox{appearance:none;-webkit-appearance:none;width:18px;height:18px;border-radius:4px;border:2px solid #cbd5e1;background:transparent;display:inline-block;vertical-align:middle;cursor:pointer}
+
+    .task-checkbox:checked{background:linear-gradient(90deg,var(--accent1),var(--accent2));border-color:transparent}
+
+    .mandatory-badge{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#fff;padding:6px 8px;border-radius:999px;font-weight:700;font-size:12px}
+
+    .progress-box{background:#fbfeff;padding:12px;border-radius:10px;border:1px solid #eef9fa}
+
+    .progress-bar{height:8px;background:#e9fbfb;border-radius:8px;overflow:hidden;margin-top:8px}
+
+    .fill{height:100%;background:linear-gradient(90deg,var(--accent1),var(--accent2));width:0%}
+
+
+
+    /* Modals */
+
+    .modal-backdrop{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.45);z-index:2300}
+
+    .modal { width:780px; max-width:94%; background:#fff; padding:18px; border-radius:12px; box-shadow:0 30px 80px rgba(11,18,40,0.45); overflow:auto; max-height:84vh }
+
+    .modal h2{margin:0 0 8px; color:var(--accent1); font-family:Merriweather, serif; font-size:26px}
+
+    .modal .subtitle{color:var(--muted); margin-bottom:12px}
+
+    .modal .close{float:right;border:0;background:#fff;padding:6px 10px;border-radius:8px;cursor:pointer}
+
+
+
+    /* AI Assistant modal tweaks */
+
+    #aiBackdrop .modal{ width:640px; }
+
+    #aiInput { width:100%; padding:10px 12px; border-radius:8px; border:1px solid #eef4f8; font-size:14px; }
+
+    #aiSend { padding:10px 12px; border-radius:8px; border:0; background:linear-gradient(90deg,var(--accent1),var(--accent2)); color:#fff; cursor:pointer; }
+
+
+
+    /* Footer certificate bar */
+
+    .footer-cert { position: fixed; left: 50%; transform: translateX(-50%); bottom: 18px; width: min(980px, calc(100% - 40px)); background: linear-gradient(180deg,#fff,#fbfdff); border-radius:12px; padding:12px 16px; box-shadow:0 18px 40px rgba(11,18,40,0.08); border:1px solid rgba(11,18,40,0.04); display:flex; align-items:center; justify-content:space-between; gap:12px; z-index:2500; }
+
+    .muted{color:var(--muted);font-size:13px}
+
+
+
+    @media (max-width:980px){ .features{grid-template-columns:1fr} .layout{grid-template-columns:1fr} .qa-tiles{grid-template-columns:repeat(2,1fr)} body{padding-bottom:160px} }
+
+    @media (max-width:560px){ .qa-tiles{grid-template-columns:repeat(1,1fr)} .footer-cert{padding:10px;flex-direction:column;align-items:flex-start} }
+
+  </style>
+
+</head>
+
+<body>
+
+  <div class="page" role="main" aria-label="RIA Onboarding Dashboard">
+
+    <header class="hero" aria-labelledby="riaHeading">
+
+      <div id="riaHeading" class="brand">RIA</div>
+
+      <p class="lead">Your intelligent companion for a smooth onboarding journey. From day one to day thirty, we've got you covered.</p>
+
+      <div class="cta-row" role="group">
+
+        <button id="getStartedBtn" class="btn btn-primary">Get Started</button>
+
+        <button id="tryAssistantBtn" class="btn btn-ghost">Try AI Assistant</button>
+
+      </div>
+
+    </header>
+
+
+
+    <section class="features" aria-label="Key features">
+
+      <article class="feature">
+
+        <div class="icon-pill">🤖</div>
+
+        <div>
+
+          <div class="feature-title">AI-Powered Assistant</div>
+
+          <p class="feature-desc">Get instant answers about tools, policies and processes.</p>
+
+        </div>
+
+      </article>
+
+
+
+      <article id="feature-30" class="feature" role="button" tabindex="0">
+
+        <div class="icon-pill">📅</div>
+
+        <div>
+
+          <div class="feature-title">30-Day Journey</div>
+
+          <p class="feature-desc">Structured onboarding with clear milestones and daily tasks — click to preview.</p>
+
+        </div>
+
+      </article>
+
+
+
+      <article class="feature">
+
+        <div class="icon-pill">🔗</div>
+
+        <div>
+
+          <div class="feature-title">Seamless Integration</div>
+
+          <p class="feature-desc">Connect with tools, forms and contacts.</p>
+
+        </div>
+
+      </article>
+
+
+
+      <article class="feature">
+
+        <div class="icon-pill">📈</div>
+
+        <div>
+
+          <div class="feature-title">Progress Tracking</div>
+
+          <p class="feature-desc">Managers can monitor and support new team members effectively.</p>
+
+        </div>
+
+      </article>
+
+    </section>
+
+
+
+    <div class="layout" aria-live="polite">
+
+      <main>
+
+        <section id="onboardPanel" class="panel" aria-labelledby="onboardTitle">
+
+          <div style="display:flex;justify-content:space-between;align-items:center">
+
+            <div>
+
+              <div id="onboardTitle" style="font-weight:800">Onboarding — Create & View</div>
+
+              <div style="color:var(--muted);font-size:13px">Create a joiner and generate a 30‑day ramp</div>
+
+            </div>
+
+          </div>
+
+
+
+          <form id="onboardForm" class="form-grid" onsubmit="return false" style="margin-top:12px">
+
+            <input id="inputName" placeholder="Full name (e.g., John Smith)" />
+
+            <div id="errName" class="error" style="display:none;color:#b00020;font-size:12px">Name is required</div>
+
+
+
+            <input id="inputEmail" placeholder="Email (e.g., john.smith@company.com)" />
+
+            <div id="errEmail" class="error" style="display:none;color:#b00020;font-size:12px">Valid email is required</div>
+
+
+
+            <div class="field-row" style="display:flex;gap:8px;margin-top:8px">
+
+              <input id="inputDepartment" placeholder="Department (e.g., Engineering)" />
+
+              <input id="inputLocation" placeholder="Location (e.g., London)" />
+
+            </div>
+
+            <div style="display:flex;gap:8px;margin-top:6px">
+
+              <div id="errDept" class="error" style="flex:1;display:none;color:#b00020;font-size:12px">Department is required</div>
+
+              <div id="errLoc" class="error" style="flex:1;display:none;color:#b00020;font-size:12px">Location is required</div>
+
+            </div>
+
+
+
+            <div style="display:flex;gap:10px;margin-top:10px">
+
+              <button id="btnGenerate" type="button" class="btn btn-primary">Generate 30‑day Plan</button>
+
+              <button id="btnClear" type="button" class="btn btn-ghost">Clear</button>
+
+            </div>
+
+            <div id="onboardInlineError" style="display:none;color:#b00020;margin-top:8px;font-size:13px"></div>
+
+            <div id="onboardHelp" style="margin-top:10px;color:var(--muted);font-size:13px">Fill required fields then click Generate to start Day 1.</div>
+
+          </form>
+
+
+
+          <div id="todayArea" class="today-grid" style="display:none;margin-top:18px">
+
+            <div style="flex:1">
+
+              <div style="display:flex;justify-content:space-between;align-items:center">
+
+                <div style="font-weight:800">Today's Tasks</div>
+
+                <div id="mandatoryProgress" style="font-size:13px;color:var(--muted)">Mandatory: 0/0</div>
+
+              </div>
+
+              <div style="color:var(--muted);font-size:13px;margin-top:6px">Complete these to stay on track</div>
+
+              <div id="todayTaskList" style="margin-top:12px"></div>
+
+            </div>
+
+
+
+            <aside style="width:220px">
+
+              <div class="progress-box">
+
+                <div style="color:var(--muted);font-size:13px">Tasks Completed</div>
+
+                <div id="tasksCompleted" style="font-weight:800;font-size:18px">0/0</div>
+
+                <div style="color:var(--muted);font-size:12px">Today's progress</div>
+
+                <div class="progress-bar"><div id="todayFill" class="fill" style="width:0%"></div></div>
+
+              </div>
+
+
+
+              <div class="progress-box" style="margin-top:12px">
+
+                <div style="color:var(--muted);font-size:13px">Overall Progress</div>
+
+                <div id="overallPct" style="font-weight:800;font-size:18px">0%</div>
+
+                <div class="progress-bar"><div id="overallFill" class="fill" style="width:0%"></div></div>
+
+              </div>
+
+            </aside>
+
+          </div>
+
+        </section>
+
+      </main>
+
+
+
+      <aside>
+
+        <div class="panel quick-access-card" aria-labelledby="qaTitle">
+
+          <div style="display:flex;justify-content:space-between;align-items:center">
+
+            <div>
+
+              <div id="qaTitle" class="qa-title">Quick Access</div>
+
+              <div class="qa-sub">Important resources and tools</div>
+
+            </div>
+
+          </div>
+
+
+
+          <div id="qaTiles" class="qa-tiles" role="list" aria-label="Quick access tiles">
+
+            <!-- Rendered by JS -->
+
+          </div>
+
+        </div>
+
+
+
+        <div id="managerPanel" class="panel" style="margin-top:14px;display:none">
+
+          <div style="font-weight:800">Manager Dashboard</div>
+
+          <div style="color:var(--muted);font-size:13px;margin-top:8px">Onboardees</div>
+
+          <div id="usersList" style="margin-top:10px"></div>
+
+        </div>
+
+
+
+        <div id="myDashboard" class="my-dashboard" style="margin-top:14px" aria-live="polite">
+
+          <div style="display:flex;justify-content:space-between;align-items:center">
+
+            <div style="font-weight:800">My Dashboard</div>
+
+            <div style="color:var(--muted);font-size:13px">Overview</div>
+
+          </div>
+
+
+
+          <div class="stat-grid" id="statGrid" style="margin-top:12px">
+
+            <div class="stat">
+
+              <div class="num" id="statOnboardees">0</div>
+
+              <div class="label">My Onboardees</div>
+
+            </div>
+
+            <div class="stat">
+
+              <div class="num" id="statPending">0</div>
+
+              <div class="label">Pending Trainings</div>
+
+            </div>
+
+            <div class="stat">
+
+              <div class="num" id="statToday">0</div>
+
+              <div class="label">Today's Tasks</div>
+
+            </div>
+
+            <div class="stat">
+
+              <div class="num" id="statComplete">0</div>
+
+              <div class="label">Completed Tasks</div>
+
+            </div>
+
+          </div>
+
+
+
+          <div style="margin-top:12px;display:flex;gap:8px">
+
+            <button id="btnViewPlan" class="btn btn-primary">Tools</button>
+
+          </div>
+
+        </div>
+
+      </aside>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- ===== Modals: Quick Access content (present & complete) ===== -->
+
+  <div id="benefitsBackdrop" class="modal-backdrop" aria-hidden="true">
+
+    <div class="modal" role="dialog" aria-labelledby="benefitsTitle">
+
+      <button class="close" id="closeBenefits">Close</button>
+
+      <h2 id="benefitsTitle">UK Employee Benefits</h2>
+
+      <div class="subtitle">Your comprehensive benefits package</div>
+
+      <div class="benefit-list" style="margin-top:8px">
+
+        <div><strong>Pension Scheme</strong> Employer contribution: 5% | Employee contribution: 3%</div>
+
+        <div style="margin-top:6px"><strong>Health Insurance</strong> Private medical insurance through Bupa — dental & optical</div>
+
+        <div style="margin-top:6px"><strong>Life Assurance</strong> 4x annual salary</div>
+
+        <div style="margin-top:6px"><strong>Annual Leave</strong> 25 days + 8 bank holidays</div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <div id="handbookBackdrop" class="modal-backdrop" aria-hidden="true">
+
+    <div class="modal" role="dialog" aria-labelledby="handbookTitle">
+
+      <button class="close" id="closeHandbook">Close</button>
+
+      <h2 id="handbookTitle">Employee Handbook</h2>
+
+      <div class="subtitle">Essential policies and procedures</div>
+
+      <div style="margin-top:8px">
+
+        <div><strong>Working Hours:</strong> 9:00 - 17:30 (37.5 hrs)</div>
+
+        <div style="margin-top:6px"><strong>Sickness Absence:</strong> Notify manager before 09:00</div>
+
+        <div style="margin-top:6px"><strong>Data Protection:</strong> GDPR compliance required</div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <div id="perksBackdrop" class="modal-backdrop" aria-hidden="true">
+
+    <div class="modal" role="dialog" aria-labelledby="perksTitle">
+
+      <button class="close" id="closePerks">Close</button>
+
+      <h2 id="perksTitle">UK Perks</h2>
+
+      <div class="subtitle">Additional benefits and perks</div>
+
+      <div style="margin-top:8px">
+
+        <ul style="margin:0 0 0 18px;color:var(--muted)">
+
+          <li>Gym discounts</li>
+
+          <li>Season ticket loans</li>
+
+          <li>Discount portal</li>
+
+        </ul>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <div id="awardcoBackdrop" class="modal-backdrop" aria-hidden="true">
+
+    <div class="modal" role="dialog" aria-labelledby="awardcoTitle">
+
+      <button class="close" id="closeAwardco">Close</button>
+
+      <h2 id="awardcoTitle">Awardco — Rewards & Recognition</h2>
+
+      <div class="subtitle">Recognise colleagues and redeem rewards</div>
+
+      <div style="margin-top:8px">Use Awardco to send recognition and redeem points for gifts.</div>
+
+    </div>
+
+  </div>
+
+
+
+  <div id="timesheetsBackdrop" class="modal-backdrop" aria-hidden="true">
+
+    <div class="modal" role="dialog" aria-labelledby="timesheetsTitle">
+
+      <button class="close" id="closeTimesheets">Close</button>
+
+      <h2 id="timesheetsTitle">Time Sheets</h2>
+
+      <div class="subtitle">Track time and request leave</div>
+
+      <div style="margin-top:8px">
+
+        <div><strong>Clock In:</strong> 09:00</div>
+
+        <div style="margin-top:6px"><strong>Clock Out:</strong> 17:30</div>
+
+        <div style="margin-top:6px"><strong>Leave:</strong> Request via Timesheets portal (demo)</div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <div id="salaryBackdrop" class="modal-backdrop" aria-hidden="true">
+
+    <div class="modal" role="dialog" aria-labelledby="salaryTitle">
+
+      <button class="close" id="closeSalary">Close</button>
+
+      <h2 id="salaryTitle">Salary</h2>
+
+      <div class="subtitle">Your compensation details</div>
+
+      <div style="margin-top:8px">
+
+        <div><strong>Basic Salary (Annual):</strong> £55,000</div>
+
+        <div style="margin-top:6px"><strong>Payment Schedule:</strong> Monthly</div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- Tools, Certificate, AI Modals -->
+
+  <div id="toolsBackdrop" class="modal-backdrop" aria-hidden="true">
+
+    <div class="modal" role="dialog" aria-labelledby="toolsTitle">
+
+      <button class="close" id="closeTools">Close</button>
+
+      <h2 id="toolsTitle">Tools & Knowledge</h2>
+
+      <div class="subtitle">Networking Tips, Node Tips, Process updates, SOP, Site contacts and Emergency contacts</div>
+
+      <div style="margin-top:12px">
+
+        <h3 style="margin:0 0 6px">Networking Tips</h3>
+
+        <ul style="margin:0 0 10px 18px;color:var(--muted)"><li>Check switch port mapping</li><li>Label patch cables</li><li>Document IP allocations</li></ul>
+
+        <h3 style="margin:0 0 6px">SOP / Contacts</h3>
+
+        <div style="color:var(--muted)">Site Admin: Alice Parker — alice.parker@example.com — +44 7700 900111</div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <div id="certBackdrop" class="modal-backdrop" aria-hidden="true">
+
+    <div class="modal" role="dialog" aria-labelledby="certTitle">
+
+      <button class="close" id="certClose">Close</button>
+
+      <h2 id="certTitle">Certificate of Completion</h2>
+
+      <div class="subtitle" id="certSubtitle">You completed Day 1 mandatory trainings</div>
+
+      <div id="certSvgContainer" style="margin-top:12px"></div>
+
+      <div style="display:flex;justify-content:flex-end;margin-top:12px;gap:8px">
+
+        <button id="certDownload" class="btn btn-primary">Download PNG</button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <div id="aiBackdrop" class="modal-backdrop" aria-hidden="true">
+
+    <div class="modal" role="dialog" aria-labelledby="aiTitle">
+
+      <button class="close" id="aiClose">Close</button>
+
+      <h2 id="aiTitle">AI Assistant</h2>
+
+      <div class="subtitle">Ask about onboarding, benefits, timesheets, or tools.</div>
+
+      <div style="margin-top:12px;display:flex;gap:8px;align-items:center">
+
+        <input id="aiInput" type="search" placeholder="Ask: 'How do I request leave?'" />
+
+        <button id="aiSend" class="btn btn-primary">Send</button>
+
+      </div>
+
+      <div id="aiResult" style="margin-top:12px;padding:12px;border-radius:8px;background:#fbfdff;border:1px solid #eef6fb;min-height:60px"></div>
+
+    </div>
+
+  </div>
+
+
+
+  <div id="footerCert" class="footer-cert" style="display:none" aria-hidden="true">
+
+    <div>
+
+      <div style="font-weight:700">Certificate ready</div>
+
+      <div class="muted" id="footerCertUser" style="margin-left:6px">—</div>
+
+    </div>
+
+    <div style="display:flex;gap:8px;">
+
+      <button id="footerDownload" class="btn btn-primary">Download Certificate</button>
+
+      <button id="footerOpenCert" class="btn btn-ghost">View</button>
+
+    </div>
+
+  </div>
+
+
+
+  <script>
+
+    (function(){
+
+      // Core data & helpers
+
+      const DB_KEY = 'ria_ria_demo_v2';
+
+      const CURRENT_USER_KEY = 'ria_current_user_v2';
+
+      const DAY1_TASKS = [
+
+        'Health and Safety Training',
+
+        'Submit benefits enrollment form',
+
+        'System Policy Training',
+
+        'Desktop Policy Training',
+
+        'Node Troubleshooting Training',
+
+        'Network Troubleshooting Training'
+
+      ];
+
+
+
+      const QA_ITEMS = [
+
+        { key:'uk-benefits', icon:'🎁', label:'UK Benefits', modalId:'benefitsBackdrop' },
+
+        { key:'handbook', icon:'📘', label:'Employee Handbook', modalId:'handbookBackdrop' },
+
+        { key:'uk-perks', icon:'🎖️', label:'UK Perks', modalId:'perksBackdrop' },
+
+        { key:'awardco', icon:'🏆', label:'Awardco', modalId:'awardcoBackdrop' },
+
+        { key:'timesheets', icon:'⏱️', label:'Time Sheets', modalId:'timesheetsBackdrop' },
+
+        { key:'salary', icon:'💷', label:'Salary', modalId:'salaryBackdrop' }
+
+      ];
+
+
+
+      const $ = id => document.getElementById(id);
+
+      function escapeHtml(s){ if(s==null) return ''; return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+
+
+
+      function readDB(){ try { return JSON.parse(localStorage.getItem(DB_KEY) || '{}'); } catch(e){ return {}; } }
+
+      function writeDB(obj){ try { localStorage.setItem(DB_KEY, JSON.stringify(obj)); } catch(e){} }
+
+
+
+      function initDB(){
+
+        const db = readDB();
+
+        db.users = db.users || [];
+
+        db.plans = db.plans || {};
+
+        db.progress = db.progress || {};
+
+        db.completed = db.completed || {};
+
+        db.certs = db.certs || {};
+
+        writeDB(db);
+
+      }
+
+
+
+      function setCurrentUser(id){ if(id) localStorage.setItem(CURRENT_USER_KEY, id); else localStorage.removeItem(CURRENT_USER_KEY); }
+
+      function getCurrentUser(){ return localStorage.getItem(CURRENT_USER_KEY) || null; }
+
+
+
+      // Render Quick Access tiles and wire them
+
+      function renderQuickAccess(){
+
+        const container = $('qaTiles');
+
+        if(!container) return;
+
+        container.innerHTML = '';
+
+        QA_ITEMS.forEach(item=>{
+
+          const btn = document.createElement('button');
+
+          btn.type = 'button';
+
+          btn.className = 'qa-tile';
+
+          btn.innerHTML = `<div class="qa-icon" aria-hidden="true">${escapeHtml(item.icon)}</div><div class="qa-label">${escapeHtml(item.label)}</div>`;
+
+          btn.addEventListener('click', ()=> {
+
+            const modal = $(item.modalId);
+
+            if(modal){
+
+              modal.style.display = 'flex';
+
+              modal.setAttribute('aria-hidden','false');
+
+            } else {
+
+              console.warn('Modal not found for Quick Access item:', item.modalId);
+
+            }
+
+          });
+
+          container.appendChild(btn);
+
+        });
+
+      }
+
+
+
+      // Create or update user
+
+      function validateEmail(v){ if(!v) return false; return /^\S+@\S+\.\S+$/.test(v); } // reasonable validation
+
+      function clearErrors(){
+
+        ['errName','errEmail','errDept','errLoc','onboardInlineError'].forEach(id => { const el = $(id); if(el){ el.style.display='none'; el.textContent=''; }});
+
+      }
+
+
+
+      function createOrGetUser(){
+
+        clearErrors();
+
+        const name = $('inputName')?.value.trim() || '';
+
+        const email = $('inputEmail')?.value.trim() || '';
+
+        const dept = $('inputDepartment')?.value.trim() || '';
+
+        const loc = $('inputLocation')?.value.trim() || '';
+
+
+
+        if(!name){ $('errName').style.display='block'; return null; }
+
+        if(!email || !validateEmail(email)){ $('errEmail').textContent='Valid email is required'; $('errEmail').style.display='block'; return null; }
+
+        if(!dept){ $('errDept').style.display='block'; return null; }
+
+        if(!loc){ $('errLoc').style.display='block'; return null; }
+
+
+
+        const db = readDB();
+
+        db.users = db.users || [];
+
+        let user = db.users.find(u => (u.email||'').toLowerCase() === email.toLowerCase());
+
+        if(!user){
+
+          user = { id:'u-'+Math.random().toString(36).slice(2,9), name, email, department:dept, location:loc, start: $('inputStart')?.value || new Date().toISOString().slice(0,10) };
+
+          db.users.push(user);
+
+        } else {
+
+          user.name = name; user.department = dept; user.location = loc;
+
+        }
+
+        writeDB(db);
+
+        setCurrentUser(user.id);
+
+        return user;
+
+      }
+
+
+
+      // Create 30-day plan for user
+
+      function setUserPlan(userId){
+
+        if(!userId) return;
+
+        const db = readDB();
+
+        db.plans = db.plans || {};
+
+        const days = [{ day:1, tasks: DAY1_TASKS.slice() }];
+
+        for(let i=2;i<=30;i++) days.push({ day:i, tasks:[`Day ${i} Task A`,`Day ${i} Task B`] });
+
+        db.plans[userId] = { userId, start: new Date().toISOString().slice(0,10), plan:{ summary:'30-day', days } };
+
+        db.progress = db.progress || {};
+
+        db.progress[userId] = { day:1 };
+
+        db.completed = db.completed || {};
+
+        db.completed[userId] = db.completed[userId] || [];
+
+        writeDB(db);
+
+      }
+
+
+
+      function markCompleted(userId,label,day){
+
+        const db = readDB(); db.completed = db.completed || {}; db.completed[userId] = db.completed[userId] || [];
+
+        const idx = db.completed[userId].findIndex(x => x.label === label && x.day === day);
+
+        const ts = new Date().toISOString();
+
+        if(idx === -1) db.completed[userId].push({ label, day, ts });
+
+        else db.completed[userId][idx].ts = ts;
+
+        writeDB(db);
+
+      }
+
+      function unmarkCompleted(userId,label,day){
+
+        const db = readDB(); db.completed = db.completed || {}; db.completed[userId] = db.completed[userId] || [];
+
+        db.completed[userId] = db.completed[userId].filter(x => !(x.label===label && x.day===day));
+
+        writeDB(db);
+
+      }
+
+      function isCompleted(userId,label,day){
+
+        const db = readDB();
+
+        return !!(db.completed && db.completed[userId] && db.completed[userId].some(x => x.label === label && x.day === day));
+
+      }
+
+      function completedTs(userId,label,day){
+
+        const db = readDB();
+
+        const arr = db.completed && db.completed[userId] ? db.completed[userId] : [];
+
+        const o = arr.find(x => x.label === label && x.day === day);
+
+        return o ? o.ts : null;
+
+      }
+
+
+
+      function renderTodayTasksFor(userId){
+
+        const current = userId || getCurrentUser();
+
+        const db = readDB();
+
+        if(!current || !db.plans || !db.plans[current]){ $('todayArea').style.display='none'; return; }
+
+        const planObj = db.plans[current];
+
+        const day = (db.progress && db.progress[current] && db.progress[current].day) || 1;
+
+        const dayObj = planObj.plan.days.find(d=>d.day===day);
+
+        if(!dayObj){ $('todayArea').style.display='none'; return; }
+
+
+
+        $('todayArea').style.display = 'flex';
+
+        $('todayTaskList').innerHTML = '';
+
+        dayObj.tasks.forEach(task=>{
+
+          const mandatory = DAY1_TASKS.includes(task);
+
+          const checked = isCompleted(current, task, day);
+
+          const ts = completedTs(current, task, day);
+
+          const row = document.createElement('div');
+
+          row.className = 'task-row';
+
+          row.innerHTML = `
+
+            <div style="display:flex;gap:12px;align-items:center">
+
+              <input type="checkbox" class="task-checkbox" ${checked ? 'checked' : ''} />
+
+              <div>
+
+                <div style="font-weight:700">${escapeHtml(task)}</div>
+
+                <div class="task-meta">${mandatory ? 'Mandatory' : 'Optional'}${ts ? ' • Completed: ' + new Date(ts).toLocaleString() : ''}</div>
+
+              </div>
+
+            </div>
+
+            <div style="display:flex;align-items:center;gap:8px">
+
+              ${mandatory ? '<div class="mandatory-badge">MANDATORY</div>' : ''}
+
+              <div style="width:22px;height:22px;display:grid;place-items:center;color:var(--muted)">${checked ? '✓' : ''}</div>
+
+            </div>
+
+          `;
+
+          $('todayTaskList').appendChild(row);
+
+
+
+          const chk = row.querySelector('.task-checkbox');
+
+          chk.addEventListener('change', (e)=>{
+
+            if(e.target.checked) markCompleted(current, task, day);
+
+            else unmarkCompleted(current, task, day);
+
+            updateProgressUI(current);
+
+            maybeHandleDayCompletion(current);
+
+            const newTs = completedTs(current, task, day);
+
+            const meta = row.querySelector('.task-meta');
+
+            if(meta) meta.textContent = (mandatory ? 'Mandatory' : 'Optional') + (newTs ? ' • Completed: ' + new Date(newTs).toLocaleString() : '');
+
+          });
+
+        });
+
+
+
+        updateProgressUI(current);
+
+      }
+
+
+
+      function updateProgressUI(userId){
+
+        const current = userId || getCurrentUser();
+
+        const db = readDB();
+
+        if(!current || !db.plans || !db.plans[current]){ return; }
+
+        const planObj = db.plans[current];
+
+        const day = (db.progress && db.progress[current] && db.progress[current].day) || 1;
+
+        const dayObj = planObj.plan.days.find(d=>d.day===day);
+
+        const totalToday = dayObj ? dayObj.tasks.length : 0;
+
+        const completedToday = (db.completed && db.completed[current]) ? db.completed[current].filter(x=> x.day===day && dayObj.tasks.includes(x.label)).length : 0;
+
+        $('tasksCompleted').textContent = `${completedToday}/${totalToday}`;
+
+        $('todayFill').style.width = totalToday ? Math.round((completedToday/totalToday)*100) + '%' : '0%';
+
+
+
+        const totalTasks = planObj.plan.days.reduce((s,d) => s + (d.tasks?d.tasks.length:0), 0);
+
+        const totalCompleted = (db.completed && db.completed[current]) ? db.completed[current].length : 0;
+
+        const overallPct = totalTasks ? Math.round((totalCompleted/totalTasks)*100) : 0;
+
+        $('overallPct').textContent = overallPct + '%';
+
+        $('overallFill').style.width = overallPct + '%';
+
+
+
+        const mandatoryDone = (db.completed && db.completed[current]) ? DAY1_TASKS.filter(t => db.completed[current].some(o=>o.label===t && o.day===1)).length : 0;
+
+        document.querySelectorAll('#mandatoryProgress').forEach(el => el.textContent = `Mandatory: ${mandatoryDone}/${DAY1_TASKS.length}`);
+
+
+
+        // update dashboard counters
+
+        $('statOnboardees').textContent = (db.users || []).length;
+
+        $('statComplete').textContent = totalCompleted;
+
+        $('statToday').textContent = totalToday;
+
+        const pending = DAY1_TASKS.filter(t => !(db.completed && db.completed[current] && db.completed[current].some(o=>o.label===t && o.day===1))).length;
+
+        $('statPending').textContent = pending;
+
+      }
+
+
+
+      function maybeHandleDayCompletion(userId){
+
+        const current = userId || getCurrentUser();
+
+        const db = readDB();
+
+        if(!current || !db.plans || !db.plans[current]) return;
+
+        const planObj = db.plans[current];
+
+        const day = (db.progress && db.progress[current] && db.progress[current].day) || 1;
+
+        const dayObj = planObj.plan.days.find(d=>d.day===day);
+
+        if(!dayObj) return;
+
+        const total = dayObj.tasks.length;
+
+        const done = (db.completed && db.completed[current]) ? db.completed[current].filter(x=> x.day===day && dayObj.tasks.includes(x.label)).length : 0;
+
+        if(done >= total){
+
+          if(day === 1){
+
+            const allMandatory = DAY1_TASKS.every(t => db.completed[current] && db.completed[current].some(o => o.label === t && o.day === 1));
+
+            if(allMandatory){
+
+              db.certs = db.certs || {};
+
+              db.certs[current] = { earned:true, ts: new Date().toISOString() };
+
+              writeDB(db);
+
+              renderCertificate(current);
+
+              openModal('certBackdrop');
+
+              setTimeout(()=>{ db.progress[current].day = 2; writeDB(db); renderTodayTasksFor(current); }, 700);
+
+              return;
+
+            }
+
+          }
+
+          db.progress[current] = db.progress[current] || {};
+
+          db.progress[current].day = Math.min(day + 1, planObj.plan.days.length);
+
+          writeDB(db);
+
+          renderTodayTasksFor(current);
+
+        }
+
+      }
+
+
+
+      function renderCertificate(userId){
+
+        const db = readDB();
+
+        const user = (db.users||[]).find(u=>u.id===userId) || { name:'Employee' };
+
+        const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800"><rect width="100%" height="100%" fill="#fff" rx="24"/><text x="50%" y="160" text-anchor="middle" font-family="Merriweather, serif" font-size="64" fill="#1f2d3d">Certificate of Completion</text><text x="50%" y="360" text-anchor="middle" font-family="Inter, sans-serif" font-size="48" font-weight="700" fill="#0b1720">${escapeHtml(user.name)}</text><text x="50%" y="460" text-anchor="middle" font-family="Inter, sans-serif" font-size="20" fill="#667085">has completed Day 1 mandatory trainings</text><text x="50%" y="540" text-anchor="middle" font-family="Inter, sans-serif" font-size="18" fill="#667085">Date: ${escapeHtml(new Date().toLocaleDateString())}</text></svg>`;
+
+        const c = $('certSvgContainer'); if(c) c.innerHTML = '';
+
+        const img = new Image(); const url = URL.createObjectURL(new Blob([svg],{type:'image/svg+xml'}));
+
+        img.onload = ()=>{ if(c) c.appendChild(img); URL.revokeObjectURL(url); };
+
+        img.src = url;
+
+        updateFooterUI();
+
+      }
+
+
+
+      function updateFooterUI(){
+
+        const cur = getCurrentUser();
+
+        const db = readDB();
+
+        const footer = $('footerCert');
+
+        if(!cur || !(db.certs && db.certs[cur] && db.certs[cur].earned)){
+
+          footer.style.display='none';
+
+          footer.setAttribute('aria-hidden','true');
+
+          return;
+
+        }
+
+        footer.style.display='flex';
+
+        footer.setAttribute('aria-hidden','false');
+
+        const user = (db.users||[]).find(u=>u.id===cur) || { name:'Employee' };
+
+        $('footerCertUser').textContent = user.name + ' • ' + (db.certs[cur].ts ? new Date(db.certs[cur].ts).toLocaleDateString() : '');
+
+      }
+
+
+
+      // Utilities: open/close modals
+
+      function openModal(id){
+
+        const el = document.getElementById(id);
+
+        if(!el) return;
+
+        el.style.display = 'flex';
+
+        el.setAttribute('aria-hidden','false');
+
+      }
+
+      function closeModal(id){
+
+        const el = document.getElementById(id);
+
+        if(!el) return;
+
+        el.style.display = 'none';
+
+        el.setAttribute('aria-hidden','true');
+
+      }
+
+
+
+      // Download certificate
+
+      function downloadCertificate(userId){
+
+        if(!userId) userId = getCurrentUser();
+
+        if(!userId) return alert('No user selected');
+
+        const db = readDB(); const user = (db.users||[]).find(u=>u.id===userId) || { name:'Employee' };
+
+        const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800"><rect width="100%" height="100%" fill="#fff" rx="24"/><text x="50%" y="160" text-anchor="middle" font-family="Merriweather, serif" font-size="64" fill="#1f2d3d">Certificate of Completion</text><text x="50%" y="360" text-anchor="middle" font-family="Inter, sans-serif" font-size="48" font-weight="700" fill="#0b1720">${escapeHtml(user.name)}</text><text x="50%" y="460" text-anchor="middle" font-family="Inter, sans-serif" font-size="20" fill="#667085">has completed Day 1 mandatory trainings</text><text x="50%" y="540" text-anchor="middle" font-family="Inter, sans-serif" font-size="18" fill="#667085">Date: ${escapeHtml(new Date().toLocaleDateString())}</text></svg>`;
+
+        const url = URL.createObjectURL(new Blob([svg],{type:'image/svg+xml'}));
+
+        const img = new Image();
+
+        img.onload = () => {
+
+          const canvas = document.createElement('canvas'); canvas.width = img.width; canvas.height = img.height;
+
+          const ctx = canvas.getContext('2d'); ctx.fillStyle = '#fff'; ctx.fillRect(0,0,canvas.width,canvas.height); ctx.drawImage(img,0,0);
+
+          canvas.toBlob((blob) => {
+
+            const a = document.createElement('a');
+
+            a.href = URL.createObjectURL(blob);
+
+            a.download = `${user.name.replace(/\s+/g,'_')}_certificate.png`;
+
+            document.body.appendChild(a);
+
+            a.click();
+
+            a.remove();
+
+          }, 'image/png');
+
+          URL.revokeObjectURL(url);
+
+        };
+
+        img.src = url;
+
+      }
+
+
+
+      // Quick access rendering and other UI wiring
+
+      function renderAll(){
+
+        renderQuickAccess();
+
+        renderUsers();
+
+        updateFooterUI();
+
+        const cur = getCurrentUser();
+
+        if(cur){
+
+          const db = readDB();
+
+          if(db.plans && db.plans[cur]) renderTodayTasksFor(cur);
+
+        }
+
+      }
+
+
+
+      function renderUsers(){
+
+        const db = readDB();
+
+        const list = $('usersList');
+
+        if(!list) return;
+
+        list.innerHTML = '';
+
+        (db.users || []).forEach(u=>{
+
+          const btn = document.createElement('button');
+
+          btn.className = 'btn btn-ghost';
+
+          btn.style.display = 'block'; btn.style.width = '100%'; btn.style.textAlign = 'left'; btn.style.marginBottom = '8px';
+
+          btn.textContent = `${u.name} — ${u.email}` + (u.department ? ' • ' + u.department : '');
+
+          btn.addEventListener('click', ()=>{
+
+            $('inputName').value = u.name || '';
+
+            $('inputEmail').value = u.email || '';
+
+            $('inputDepartment').value = u.department || '';
+
+            $('inputLocation').value = u.location || '';
+
+            setCurrentUser(u.id);
+
+            if((readDB().plans||{})[u.id]) renderTodayTasksFor(u.id);
+
+          });
+
+          list.appendChild(btn);
+
+        });
+
+      }
+
+
+
+      // AI responder (simple, local)
+
+      function aiRespond(text){
+
+        const out = $('aiResult');
+
+        if(!text || !text.trim()){ out.textContent = 'Please enter a question.'; return; }
+
+        out.innerHTML = '<em>Thinking…</em>';
+
+        setTimeout(()=>{
+
+          const q = text.trim().toLowerCase();
+
+          if(q.includes('benefit') || q.includes('pension')){ openModal('benefitsBackdrop'); out.textContent = 'Opened UK Benefits.'; return; }
+
+          if(q.includes('handbook') || q.includes('policy')){ openModal('handbookBackdrop'); out.textContent = 'Opened Employee Handbook.'; return; }
+
+          if(q.includes('perk') || q.includes('perks')){ openModal('perksBackdrop'); out.textContent = 'Opened UK Perks.'; return; }
+
+          if(q.includes('award') || q.includes('awardco')){ openModal('awardcoBackdrop'); out.textContent = 'Opened Awardco.'; return; }
+
+          if(q.includes('time') || q.includes('timesheet') || q.includes('leave')){ openModal('timesheetsBackdrop'); out.textContent = 'Opened Time Sheets.'; return; }
+
+          if(q.includes('salary') || q.includes('pay')){ openModal('salaryBackdrop'); out.textContent = 'Opened Salary Details.'; return; }
+
+          out.innerHTML = 'Demo AI: I can help with onboarding, timesheets, benefits and tools. You asked: "<strong>' + escapeHtml(text) + '</strong>". Try keywords like "timesheets", "benefits", or "salary".';
+
+        }, 450);
+
+      }
+
+
+
+      // Safe attachment: remove duplicate handlers if re-run
+
+      function safeAttach(id, event, handler){
+
+        const el = $(id);
+
+        if(!el) return;
+
+        el._handlers = el._handlers || {};
+
+        if(el._handlers[event]) el.removeEventListener(event, el._handlers[event]);
+
+        el._handlers[event] = handler;
+
+        el.addEventListener(event, handler);
+
+      }
+
+
+
+      // DOM ready wiring
+
+      document.addEventListener('DOMContentLoaded', ()=>{
+
+        initDB();
+
+        renderAll();
+
+
+
+        // Wire Generate button (robust, idempotent)
+
+        safeAttach('btnGenerate','click',function(e){
+
+          e.preventDefault();
+
+          const inlineErr = $('onboardInlineError');
+
+          if(inlineErr){ inlineErr.style.display='none'; inlineErr.textContent=''; }
+
+          const user = createOrGetUser();
+
+          if(!user){
+
+            if(inlineErr){ inlineErr.textContent = 'Please fill required fields correctly (name, valid email, department, location).'; inlineErr.style.display='block'; }
+
+            return;
+
+          }
+
+          setUserPlan(user.id);
+
+          renderTodayTasksFor(user.id);
+
+        });
+
+
+
+        // Clear button
+
+        safeAttach('btnClear','click',function(){
+
+          ['inputName','inputEmail','inputDepartment','inputLocation','inputLineManager','inputStart'].forEach(id=>{ const el=$(id); if(el) el.value=''; });
+
+          clearErrors();
+
+        });
+
+
+
+        // seed via feature-30
+
+        const f30 = $('feature-30');
+
+        if(f30) f30.addEventListener('click', ()=>{
+
+          $('inputName').value='John Smith';
+
+          $('inputEmail').value='john.smith@demo.com';
+
+          $('inputDepartment').value='Engineering';
+
+          $('inputLocation').value='London';
+
+          const user = createOrGetUser(); if(!user) return;
+
+          setUserPlan(user.id);
+
+          renderTodayTasksFor(user.id);
+
+        });
+
+
+
+        // Quick Access rendered earlier; ensure tiles open modals (renderQuickAccess does that)
+
+        // Modal close wiring
+
+        document.querySelectorAll('.modal .close').forEach(btn=> btn.addEventListener('click', (e)=>{ const backdrop = e.target.closest('.modal-backdrop'); if(backdrop) { backdrop.style.display='none'; backdrop.setAttribute('aria-hidden','true'); } }));
+
+
+
+        // clicking backdrop closes modal
+
+        document.querySelectorAll('.modal-backdrop').forEach(b => {
+
+          b.addEventListener('click', (e)=>{ if(e.target === b){ b.style.display='none'; b.setAttribute('aria-hidden','true'); } });
+
+        });
+
+
+
+        // Tools button
+
+        safeAttach('btnViewPlan','click', ()=> openModal('toolsBackdrop'));
+
+
+
+        // AI assistant wiring
+
+        safeAttach('tryAssistantBtn','click', ()=> openModal('aiBackdrop'));
+
+        safeAttach('aiSend','click', ()=> aiRespond(($('aiInput')||{}).value || ''));
+
+        const aiInput = $('aiInput');
+
+        if(aiInput) aiInput.addEventListener('keydown', (e)=>{ if(e.key === 'Enter'){ e.preventDefault(); aiRespond(aiInput.value); } });
+
+
+
+        // Certificate controls
+
+        safeAttach('certDownload','click', ()=> downloadCertificate(getCurrentUser()));
+
+        safeAttach('footerDownload','click', ()=> downloadCertificate(getCurrentUser()));
+
+        safeAttach('footerOpenCert','click', ()=> { const cur = getCurrentUser(); if(cur) openModal('certBackdrop'); });
+
+
+
+        // update UI after wiring
+
+        renderAll();
+
+      });
+
+
+
+      // Expose for debugging
+
+      window._ria = { readDB, writeDB, renderQuickAccess, renderTodayTasksFor, setUserPlan, createOrGetUser, getCurrentUser, downloadCertificate };
+
+
+
+    })();
+
+  </script>
+
+</body>
+
+</html>
